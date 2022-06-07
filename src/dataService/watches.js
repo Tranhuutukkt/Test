@@ -6,7 +6,7 @@ let watches = [
         color: "black",
         size: "40x40mm",
         stockNumber: 200,
-        rate: [{1: 200}, {2:100}, {3: 0}, {4: 0}, {5: 200}],
+        rate: [{id: 1, value:  200}, {id: 2, value: 100}, {id: 3, value: 0}, {id: 4, value: 0}, {id: 5, value: 200}],
         model: {_id: "11", name: "ABC", brand: {id: "111", name: "AAA"}}
     },
     {
@@ -16,7 +16,7 @@ let watches = [
         color: "black",
         size: "40x40mm",
         stockNumber: 200,
-        rate: [{1: 200}, {2:100}, {3: 0}, {4: 0}, {5: 200}],
+        rate: [{id: 1, value:  0}, {id: 2, value: 100}, {id: 3, value: 20}, {id: 4, value: 60}, {id: 5, value: 200}],
         model: {_id: "11", name: "ABC", brand: {id: "111", name: "AAA"}}
     }
 ];
@@ -26,20 +26,20 @@ export function getWatches() {
 }
 
 export function getWatch(id) {
-    return watches.find(w => w._id === id);
+    return watches.find(w => w.id === id);
 }
 
 export function saveWatch(watch) {
-    let watchInDb = watches.find(w => w._id === watch._id) || {};
+    let watchInDb = watches.find(w => w.id === watch.id) || {};
     watchInDb.serial = watch.serial;
     watchInDb.year = watch.year;
     watchInDb.color = watch.color;
     watchInDb.size = watch.size;
     watchInDb.stockNumber = watch.stockNumber;
-    watchInDb.rate = watch.rate;
+    //watchInDb.rate = watch.rate;
 
-    if (!watchInDb._id) {
-        watchInDb._id = Date.now();
+    if (!watchInDb.id) {
+        watchInDb.id = Date.now();
         watches.push(watchInDb);
     }
 
@@ -47,7 +47,7 @@ export function saveWatch(watch) {
 }
 
 export function deleteWatch(id) {
-    let watchInDb = watches.find(m => m._id === id);
+    let watchInDb = watches.find(m => m.id === id);
     watches.splice(watches.indexOf(watchInDb), 1);
     return watchInDb;
 }
